@@ -30,6 +30,24 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # Your goal is to write the score method.
 
 def score(dice)
+  return 0 if dice.empty?
+
+  count = 0
+  roll_count = dice.tally
+  roll_count.each do |(key, value)|
+    if value >= 3
+      count += key * 100 unless [1, 5].include?(key)
+    end
+
+    if key == 1
+      count += value >= 3 ? 1000 + ((value - 3) * 100) : value * 100
+    end
+
+    if key == 5
+      count += value >= 3 ? 500 + ((value - 3) * 50) : value * 50
+    end
+  end
+  count
   # You need to write this method
 end
 
